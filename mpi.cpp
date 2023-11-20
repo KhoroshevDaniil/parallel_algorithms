@@ -68,17 +68,10 @@ int main(int argc, char* argv[]) {
 	MPI_Comm_rank(MPI_COMM_WORLD, &ProcRank);
 	MPI_Comm_size(MPI_COMM_WORLD, &ProcNum);
 
-    // double tbeg = MPI_Wtime();
-    
-    // локальный кусок матрицы
-    // double** w_i_n_loc = new double* [K + 1];
-    // for (size_t i = 0; i < K + 1; ++i) {
-    //     w_i_n_loc[i] = new double[I + 1];
-    //     for (size_t j = 0; j < I + 1; ++j) w_i_n_loc[i][j] = 0.0;
-    // }
-    
+    double tbeg = MPI_Wtime();
+
     if (ProcRank == 0) {
-        cout << "First thread started work!" << endl;
+        // cout << "First thread started work!" << endl;
         
         w_i_n_right = alloc_2d_double(K + 1, I + 1);
         fill_2d_array(w_i_n_right, K + 1, I + 1);
@@ -121,15 +114,14 @@ int main(int argc, char* argv[]) {
         }
 
         delete[] p_i;
-        cout << "p_i deleted!" << endl;
+        // cout << "p_i deleted!" << endl;
         for (size_t i = 0; i < K + 1; ++i) delete[] q_i_n[i];
         delete[] q_i_n;
-        cout << "q_i deleted!" << endl;
+        // cout << "q_i deleted!" << endl;
 
-        // MPI_Recv(&w_i_n, (K + 1) * (I + 1), MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &Status);
         w_i_n_left = alloc_2d_double(K + 1, I + 1);
         MPI_Recv(&(w_i_n_left[0][0]), (K + 1) * (I + 1), MPI_DOUBLE, 1, 0, MPI_COMM_WORLD, &Status);
-        cout << "Left part of w_i_n recieved in first thread!" << endl;
+        // cout << "Left part of w_i_n recieved in first thread!" << endl;
 
         w_i_n = alloc_2d_double(K + 1, I + 1);
 
@@ -138,12 +130,12 @@ int main(int argc, char* argv[]) {
             for (int i = i_0; i < I + 1; ++i) w_i_n[n][i] = w_i_n_left[n][i];
         }
 
-        cout << "Local w_i_n of first thread deleted!" << endl;
-        // double elapsedTime = MPI_Wtime() - tbeg;
-        // double totalTime;
-        // MPI_Reduce(&elapsedTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+        // cout << "Local w_i_n of first thread deleted!" << endl;
+        double elapsedTime = MPI_Wtime() - tbeg;
+        double totalTime;
+        MPI_Reduce(&elapsedTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
-        // cout << "MPI time: " << totalTime << endl;
+        cout << "MPI time: " << totalTime << endl;
 
         ofstream fout;
         fout.open("mpi_result.txt");
@@ -171,7 +163,7 @@ int main(int argc, char* argv[]) {
     }
     
     if (ProcRank == 1) {
-        cout << "Second thread started work!" << endl;
+        // cout << "Second thread started work!" << endl;
 
         w_i_n_left = alloc_2d_double(K + 1, I + 1);
         fill_2d_array(w_i_n_left, K + 1, I + 1);
@@ -214,19 +206,19 @@ int main(int argc, char* argv[]) {
             for (int i = i_0; i < I; ++i) w_i_n_left[n][i + 1] = ksi_i[i + 1] * w_i_n_left[n][i] + eta_i_n[n][i + 1];
         }
         delete[] ksi_i;
-        cout << "ksi_i deleted!" << endl;
+        // cout << "ksi_i deleted!" << endl;
         for (size_t i = 0; i < K + 1; ++i) delete[] eta_i_n[i];
         delete[] eta_i_n;
-        cout << "eta_i_n deleted!" << endl;
+        // cout << "eta_i_n deleted!" << endl;
 
         MPI_Send(&(w_i_n_left[0][0]), (K + 1) * (I + 1), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
-        cout << "Left part of w_i_n sended from second thread!" << endl;
+        // cout << "Left part of w_i_n sended from second thread!" << endl;
 
         free(w_i_n_left[0]);
         free(w_i_n_left);
-        // double elapsedTime = MPI_Wtime() - tbeg;
-        // double totalTime;
-        // MPI_Reduce(&elapsedTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+        double elapsedTime = MPI_Wtime() - tbeg;
+        double totalTime;
+        MPI_Reduce(&elapsedTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
     }
 
     MPI_Finalize();
