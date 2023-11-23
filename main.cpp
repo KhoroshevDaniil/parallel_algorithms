@@ -1,37 +1,8 @@
 ﻿#include "scheme.h"
-#include <fstream>
+#include "utils.h"
 
-using namespace std;
 
-void print_first(double** w_i_n, int n) {
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            cout << w_i_n[i][j] << ' ';
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
-
-void print_last(double** w_i_n, int rows, int cols, int n) {
-    for (int i = rows - 1; i > rows - n; --i) {
-        for (int j = cols - 1; j > cols - n; --j) {
-            cout << w_i_n[i][j] << ' ';
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
-
-void write_to_file(ofstream &fout, double** w_i_n, int rows, int cols) {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j)
-            fout << w_i_n[i][j] << ' ';
-        fout << endl;
-    }
-}
-
-int main() {
+int main(int argc, char* argv[]) {
     int I           = 200;
     int K           = 200;
     double T        = 150;
@@ -85,13 +56,13 @@ int main() {
 
     ofstream fout;
 
-    fout.open("result.txt");
+    fout.open("cpu_result.txt");
     if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
     else {
         fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
         fout << alpha << ' ' << beta << ' ' << R << endl;
 
-        write_to_file(fout, w_i_n_right, rows_count, cols_count);
+        write_to_file(fout, w_i_n_counter, rows_count, cols_count);
     }
     fout.close();
 
