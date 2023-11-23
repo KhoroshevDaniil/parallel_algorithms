@@ -63,6 +63,17 @@ g++ -fopenmp -o omp omp.cpp utils.cpp
 mpic++ -o mpi mpi.cpp utils.cpp
 mpirun -n 2 ./mpi <int: K> <int: I>
 ```
+# Графики
+Для визуализации вычисленной схемы можно построить графики, запустив скрипт на python. Должны быть установлены библиотеки **numpy** и **matplotlib**
+
+Ознакомиться с кодом построения графиков можно в этих файлах: [main.py](/main.py), [plot_scheme.py](/plot_scheme.py)
+
+Запуск скрипта
+```
+python main.py <path to .txt file with results> <img name without format>
+```
+Пример графиков, которые должны получиться
+![](/images/cpu.png)
 # Выводы
 Время работы каждой программы было усреднено по 12 запускам для 4х пар параметров $K$ и $I$: $[200, 200], [800, 800], [1500, 1500], [3000, 3000]$
 
