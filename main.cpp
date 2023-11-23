@@ -3,8 +3,14 @@
 
 
 int main(int argc, char* argv[]) {
-    int I           = 200;
-    int K           = 200;
+
+    int K = atoi(argv[1]);
+    int I = atoi(argv[2]);
+
+    cout << "I = " << I << " K = " << K << endl;
+
+    // int I           = 200;
+    // int K           = 200;
     double T        = 150;
     double l        = 4;
     double k        = 0.01;
@@ -14,15 +20,15 @@ int main(int argc, char* argv[]) {
     double R        = 3;
 
     //vector<vector<double>> w_i_n = calculate_implicit_modified_scheme(K, I, l, T, k, c, alpha, beta, R);
-    double** w_i_n_right    = right_run_through(K, I, l, T, k, c, alpha, beta, R);
-    double** w_i_n_left     = left_run_through(K, I, l, T, k, c, alpha, beta, R);
+    // double** w_i_n_right    = right_run_through(K, I, l, T, k, c, alpha, beta, R);
+    // double** w_i_n_left     = left_run_through(K, I, l, T, k, c, alpha, beta, R);
     double** w_i_n_counter  = counter_run_through(K, I, l, T, k, c, alpha, beta, R);
 
     int rows_count = K + 1;
     int cols_count = I + 1;
 
 
-    cout << "First 5 from RIGHT run-through algorithm" << endl;
+    /*cout << "First 5 from RIGHT run-through algorithm" << endl;
     print_first(w_i_n_right, 5);
 
     cout << "First 5 from LEFT run-through algorithm" << endl;
@@ -39,10 +45,10 @@ int main(int argc, char* argv[]) {
     print_last(w_i_n_left, rows_count, cols_count, 5);
 
     cout << "Last 5 from COUNTER run-through algorithm" << endl;
-    print_last(w_i_n_counter, rows_count, cols_count, 5);
+    print_last(w_i_n_counter, rows_count, cols_count, 5);*/
 
 
-    double error_right_left = 0.0;
+    /*double error_right_left = 0.0;
     double error_right_counter = 0.0;
     for(int i = 0; i < rows_count; ++i) {
         for (int j = 0; j < cols_count; ++j) {
@@ -52,25 +58,25 @@ int main(int argc, char* argv[]) {
     }
 
     cout << "Error between RIGHT and LEFT:\t\t" << error_right_left << endl;
-    cout << "Error between RIGHT and COUNTER:\t" << error_right_counter << endl;
+    cout << "Error between RIGHT and COUNTER:\t" << error_right_counter << endl;*/
 
-    ofstream fout;
+    // ofstream fout;
 
-    fout.open("cpu_result.txt");
-    if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
-    else {
-        fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
-        fout << alpha << ' ' << beta << ' ' << R << endl;
+    // fout.open("cpu_result.txt");
+    // if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
+    // else {
+    //     fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
+    //     fout << alpha << ' ' << beta << ' ' << R << endl;
 
-        write_to_file(fout, w_i_n_counter, rows_count, cols_count);
-    }
-    fout.close();
+    //     write_to_file(fout, w_i_n_counter, rows_count, cols_count);
+    // }
+    // fout.close();
 
-    for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_right[i];
-    delete[] w_i_n_right;
+    // for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_right[i];
+    // delete[] w_i_n_right;
 
-    for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_left[i];
-    delete[] w_i_n_left;
+    // for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_left[i];
+    // delete[] w_i_n_left;
 
     for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_counter[i];
     delete[] w_i_n_counter;

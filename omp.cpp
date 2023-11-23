@@ -4,11 +4,15 @@
 
 
 int main(int argc, char* argv[]) {
-    omp_set_num_threads(2);
+    int K = atoi(argv[1]);
+    int I = atoi(argv[2]);
 
-    // регулируемые параметры
-    int I           = 200;
-    int K           = 200;
+    cout << "I = " << I << " K = " << K << endl;
+
+    omp_set_num_threads(2);
+    
+    // int I           = 200;
+    // int K           = 200;
     int INTEGRAL    = 144;
     double T        = 150;
     double l        = 4;
@@ -168,20 +172,20 @@ int main(int argc, char* argv[]) {
     }
 
     cout << "OpenMP time: " << end - start << endl << endl;
-    print_first(w_i_n_right, 5);
-    print_last(w_i_n_right, K + 1, I + 1, 5);
+    // print_first(w_i_n_right, 5);
+    // print_last(w_i_n_right, K + 1, I + 1, 5);
 
     // записываем матрицу в файл        
-    ofstream fout;
-    fout.open("omp_result.txt");
-    if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
-    else {
-        fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
-        fout << alpha << ' ' << beta << ' ' << R << endl;
+    // ofstream fout;
+    // fout.open("omp_result.txt");
+    // if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
+    // else {
+    //     fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
+    //     fout << alpha << ' ' << beta << ' ' << R << endl;
 
-        write_to_file(fout, w_i_n_right, K + 1, I + 1);
-    }
-    fout.close();
+    //     write_to_file(fout, w_i_n_right, K + 1, I + 1);
+    // }
+    // fout.close();
 
     free(w_i_n_right[0]);
     free(w_i_n_right);

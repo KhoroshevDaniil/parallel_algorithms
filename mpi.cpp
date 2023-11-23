@@ -7,9 +7,11 @@
 int main(int argc, char* argv[]) {
     int ProcRank, ProcNum;
 
-    // регулируемые параметры
-    int I           = 200;
-    int K           = 200;
+    int K = atoi(argv[1]);
+    int I = atoi(argv[2]);
+
+    // int I           = 200;
+    // int K           = 200;
     int INTEGRAL    = 144;
     double T        = 150;
     double l        = 4;
@@ -50,6 +52,10 @@ int main(int argc, char* argv[]) {
     MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD, &ProcRank);
 	MPI_Comm_size(MPI_COMM_WORLD, &ProcNum);
+
+    if (ProcRank == 0) {
+        cout << "I = " << I << " K = " << K << endl;
+    }
 
     double tbeg = MPI_Wtime();
 
@@ -117,7 +123,7 @@ int main(int argc, char* argv[]) {
         cout << "MPI time: " << totalTime << endl;
 
         // записываем матрицу в файл        
-        ofstream fout;
+        /*ofstream fout;
         fout.open("mpi_result.txt");
         if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
         else {
@@ -126,7 +132,7 @@ int main(int argc, char* argv[]) {
 
             write_to_file(fout, w_i_n_right, K + 1, I + 1);
         }
-        fout.close();
+        fout.close();*/
 
         free(w_i_n_right[0]);
         free(w_i_n_right);
