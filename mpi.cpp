@@ -123,7 +123,7 @@ int main(int argc, char* argv[]) {
         cout << "MPI time: " << totalTime << endl;
 
         // записываем матрицу в файл        
-        /*ofstream fout;
+        ofstream fout;
         fout.open("mpi_result.txt");
         if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
         else {
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
 
             write_to_file(fout, w_i_n_right, K + 1, I + 1);
         }
-        fout.close();*/
+        fout.close();
 
         free(w_i_n_right[0]);
         free(w_i_n_right);

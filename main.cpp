@@ -60,23 +60,23 @@ int main(int argc, char* argv[]) {
     cout << "Error between RIGHT and LEFT:\t\t" << error_right_left << endl;
     cout << "Error between RIGHT and COUNTER:\t" << error_right_counter << endl;*/
 
-    // ofstream fout;
+    ofstream fout;
 
-    // fout.open("cpu_result.txt");
-    // if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
-    // else {
-    //     fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
-    //     fout << alpha << ' ' << beta << ' ' << R << endl;
+    fout.open("cpu_result.txt");
+    if (!fout.is_open()) cout << "Ошибка при создании/открытии файла" << endl;
+    else {
+        fout << I << ' ' << K << ' ' << T << ' ' << l << ' ' << k << ' ' << c << ' ';
+        fout << alpha << ' ' << beta << ' ' << R << endl;
 
-    //     write_to_file(fout, w_i_n_counter, rows_count, cols_count);
-    // }
-    // fout.close();
+        write_to_file(fout, w_i_n_counter, rows_count, cols_count);
+    }
+    fout.close();
 
-    // for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_right[i];
-    // delete[] w_i_n_right;
+    /*for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_right[i];
+    delete[] w_i_n_right;
 
-    // for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_left[i];
-    // delete[] w_i_n_left;
+    for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_left[i];
+    delete[] w_i_n_left;*/
 
     for (size_t i = 0; i < K + 1; ++i) delete[] w_i_n_counter[i];
     delete[] w_i_n_counter;
