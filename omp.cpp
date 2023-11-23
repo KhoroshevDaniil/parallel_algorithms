@@ -172,8 +172,8 @@ int main(int argc, char* argv[]) {
     }
 
     cout << "OpenMP time: " << end - start << endl << endl;
-    print_first(w_i_n_right, 5);
-    print_last(w_i_n_right, K + 1, I + 1, 5);
+    /*print_first(w_i_n_right, 5);
+    print_last(w_i_n_right, K + 1, I + 1, 5);*/
 
     // записываем матрицу в файл        
     ofstream fout;
